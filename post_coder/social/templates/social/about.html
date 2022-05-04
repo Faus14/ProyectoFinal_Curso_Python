@@ -1,0 +1,39 @@
+{% extends 'social/layout.html' %}
+
+{% block content %}
+
+<form class="form" method="post">
+	{% csrf_token %}
+	{{ form.as_p }}
+
+    <header class="masthead">
+        
+        <div class="text-center text-white">
+                <h1 class="mb-5">ALGO SOBRE NOSOTROS</h1>
+                <h4> Somos estudiantes del curso PYHTON dictado por CoderHouse.
+                             <br>
+                             Este proyecto nos ayudo a incorporarnos al mundo de la programacion
+                             <br>
+                             nos gustaria poder seguir aprendiendo nuevas tecnologias.
+                             <br>
+                             Dedicarnos plenamente a la parte de programacion
+                             <br>
+                             Esperamos seguir aprendiendo de los nuevos cursos
+                             <br>
+            
+                </h4>
+
+                <h4>El proyecto consiste en la creacion de un post, utilizando el framework
+                     de desarrollo web en python: Django
+                    Se realizo este Post con la idea de poder compartir informacion acerca 
+                    de actividades deportivas,
+                     ademas de poder seguir a otras personas como se puede hacer en twitter.</h4>
+
+            <img src="/media/about.jpg">
+        </div>
+            
+    </header>
+
+</form>
+
+{% endblock %}
