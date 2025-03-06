@@ -2,38 +2,82 @@
 
 {% block content %}
 
-<form class="form" method="post">
-	{% csrf_token %}
-	{{ form.as_p }}
-
-    <header class="masthead">
+<div class="about-container" style="padding: 2rem; background: #252525; border-radius: 8px; text-align: center;">
+    <header class="about-header">
+        <h1 class="neon-effect" style="margin-bottom: 2rem; font-size: 2.5rem;">SOBRE EL PROYECTO</h1>
         
-        <div class="text-center text-white">
-                <h1 class="mb-5">ALGO SOBRE NOSOTROS</h1>
-                <h4> Somos estudiantes del curso PYHTON dictado por CoderHouse.
-                             <br>
-                             Este proyecto nos ayudo a incorporarnos al mundo de la programacion
-                             <br>
-                             nos gustaria poder seguir aprendiendo nuevas tecnologias.
-                             <br>
-                             Dedicarnos plenamente a la parte de programacion
-                             <br>
-                             Esperamos seguir aprendiendo de los nuevos cursos
-                             <br>
+        <div class="developer-info" style="margin-bottom: 3rem;">
+            <div class="developer-avatar" style="margin: 0 auto 1.5rem auto; width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 5px solid #3498DB;">
+                <img src="/media/about.jpg" alt="Fausto" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
             
-                </h4>
-
-                <h4>El proyecto consiste en la creacion de un post, utilizando el framework
-                     de desarrollo web en python: Django
-                    Se realizo este Post con la idea de poder compartir informacion acerca 
-                    de actividades deportivas,
-                     ademas de poder seguir a otras personas como se puede hacer en twitter.</h4>
-
-            <img src="/media/about.jpg">
+            <h2 style="color: #3498DB; margin-bottom: 1rem;">Desarrollado por Fausto</h2>
+            
+            <p style="color: #e0e0e0; max-width: 800px; margin: 0 auto; line-height: 1.8; font-size: 1.1rem;">
+                
+                Este proyecto me ayudó a incorporarme al mundo de la programación
+                y me gustaría poder seguir aprendiendo nuevas tecnologías.
+                Mi objetivo es dedicarme plenamente a la programación y
+                espero seguir aprendiendo con nuevos cursos.
+            </p>
         </div>
+        
+        <div class="project-info" style="padding: 2rem; background: #1e1e1e; border-radius: 8px; margin-bottom: 2rem;">
+            <h3 style="color: #3498DB; margin-bottom: 1.5rem; font-size: 1.5rem;">Acerca del Proyecto</h3>
             
+            <p style="color: #e0e0e0; line-height: 1.8; font-size: 1.1rem;">
+                El proyecto consiste en la creación de un post, utilizando el framework
+                de desarrollo web en Python: Django.
+                Se realizó este Post con la idea de poder compartir información acerca 
+                de actividades deportivas,
+                además de poder seguir a otras personas como se puede hacer en Twitter.
+            </p>
+        </div>
+        
+        <div class="tech-stack" style="margin-bottom: 2rem;">
+            <h3 style="color: #3498DB; margin-bottom: 1.5rem; font-size: 1.5rem;">Tecnologías Utilizadas</h3>
+            
+            <div class="tech-icons" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; margin: 2rem 0;">
+                <div class="tech-item" style="text-align: center;">
+                    <i class="fab fa-python fa-3x" style="color: #3498DB;"></i>
+                    <p style="margin-top: 0.5rem; color: #e0e0e0;">Python</p>
+                </div>
+                
+                <div class="tech-item" style="text-align: center;">
+                    <i class="fab fa-html5 fa-3x" style="color: #e34c26;"></i>
+                    <p style="margin-top: 0.5rem; color: #e0e0e0;">HTML5</p>
+                </div>
+                
+                <div class="tech-item" style="text-align: center;">
+                    <i class="fab fa-css3-alt fa-3x" style="color: #2965f1;"></i>
+                    <p style="margin-top: 0.5rem; color: #e0e0e0;">CSS3</p>
+                </div>
+                
+                <div class="tech-item" style="text-align: center;">
+                    <i class="fab fa-js fa-3x" style="color: #f7df1e;"></i>
+                    <p style="margin-top: 0.5rem; color: #e0e0e0;">JavaScript</p>
+                </div>
+                
+                <div class="tech-item" style="text-align: center;">
+                    <i class="fas fa-database fa-3x" style="color: #2ecc71;"></i>
+                    <p style="margin-top: 0.5rem; color: #e0e0e0;">SQLite</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-section">
+            <h3 style="color: #3498DB; margin-bottom: 1.5rem; font-size: 1.5rem;">Contacto</h3>
+            
+            <div class="social-links" style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem;">
+                <a href="https://github.com/Faus14" style="color: #3498DB; font-size: 2rem; transition: transform 0.3s ease;">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/faustosaludas/" style="color: #3498DB; font-size: 2rem; transition: transform 0.3s ease;">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+        </div>
     </header>
-
-</form>
+</div>
 
 {% endblock %}
