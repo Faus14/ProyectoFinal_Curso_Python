@@ -1,0 +1,65 @@
+{% extends 'social/layout.html' %}
+{% block content %}
+
+<div class="profile-edit-container">
+    <h2 class="profile-edit-title">Editar perfil</h2>
+    
+    <form method="POST" enctype="multipart/form-data" class="profile-edit-form">
+        {% csrf_token %}
+        
+        <div class="image-upload-container">
+            <div class="current-image">
+                <img src="{{ user.profile.image.url }}" alt="{{ user.username }}" id="profile-preview">
+            </div>
+            
+            <div class="image-upload-controls">
+                <label for="{{ p_form.image.id_for_label }}" class="image-upload-label">
+                    Cambiar foto
+                </label>
+                {{ p_form.image }}
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ u_form.username.id_for_label }}">Nombre de usuario</label>
+            {{ u_form.username }}
+            {% if u_form.username.errors %}
+                <div class="form-errors">{{ u_form.username.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ u_form.email.id_for_label }}">Email</label>
+            {{ u_form.email }}
+            {% if u_form.email.errors %}
+                <div class="form-errors">{{ u_form.email.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="save-profile-button">Guardar cambios</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Preview de la imagen seleccionada
+    document.addEventListener('DOMContentLoaded', function() {
+        const imageInput = document.querySelector('.profile-image-input');
+        const imagePreview = document.getElementById('profile-preview');
+        
+        imageInput.addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                }
+                
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+    });
+</script>
+
+{% endblock %}

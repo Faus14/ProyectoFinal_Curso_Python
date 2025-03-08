@@ -11,10 +11,67 @@
             <i class="clock"></i>
             <time data-time="#">{{ post.timestamp|naturaltime }}</time>
             <div class="post">{{ post.content }}</div>
+            
+            <!-- Acciones del post (likes) -->
+            <div class="post-actions">
+                <div class="like-action">
+                    {% if request.user in post.likes.all %}
+                        <a href="{% url 'like_post' post.id %}" class="like-button liked">
+                            <span class="like-icon">❤️</span>
+                            <span class="like-count">{{ post.likes.count }}</span>
+                        </a>
+                    {% else %}
+                        <a href="{% url 'like_post' post.id %}" class="like-button">
+                            <span class="like-icon">🤍</span>
+                            <span class="like-count">{{ post.likes.count }}</span>
+                        </a>
+                    {% endif %}
+                </div>
+                
+                <div class="comment-action">
+                    <a href="#comments-{{ post.id }}" class="comment-button">
+                        <span class="comment-icon">💬</span>
+                        <span class="comment-count">{{ post.comments.count }}</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Sección de comentarios estilo Twitter -->
+            <div class="comments-section" id="comments-{{ post.id }}">
+                <h4>Respuestas ({{ post.comments.count }})</h4>
+                
+                <!-- Formulario para añadir comentario -->
+                <form method="POST" action="{% url 'add_comment' post.id %}" class="comment-form">
+                    {% csrf_token %}
+                    <textarea name="text" placeholder="Responder a {{ post.user.username }}"></textarea>
+                    <div class="comment-form-footer">
+                        <button type="submit" class="comment-btn">Responder</button>
+                    </div>
+                </form>
+                
+                <!-- Lista de comentarios -->
+                <div class="comments-list">
+                    {% for comment in post.comments.all %}
+                    <div class="comment">
+                        <div class="comment-avatar">
+                            <img src="{{ comment.user.profile.image.url }}" alt="{{ comment.user.username }}">
+                        </div>
+                        <div class="comment-body">
+                            <div class="comment-header">
+                                <a href="{% url 'profile' comment.user.username %}" class="comment-user">{{ comment.user.username }}</a>
+                                <span class="comment-time">· {{ comment.created_at|naturaltime }}</span>
+                            </div>
+                            <div class="comment-content">{{ comment.text }}</div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="no-comments">Aún no hay respuestas</div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 </article>
-
 {% endfor %}
 
 {% endblock %}

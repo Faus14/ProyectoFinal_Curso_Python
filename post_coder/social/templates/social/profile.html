@@ -15,7 +15,11 @@
 			{% endif %}
 		{% endif %}
 	{% endif %}
-	
+	{% if user == request.user %}
+<div class="edit-profile-link">
+    <a href="{% url 'edit_profile' %}" class="edit-profile-button">Editar perfil</a>
+</div>
+{% endif %}
 	
 </div>
 

@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import *
-from .forms import UserRegisterForm, PostForm
+from .models import Post, Relationship,Comment, Like
+from .forms import UserRegisterForm, PostForm, CommentForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 def feed(request):
 	posts = Post.objects.all()
+	comment_form = CommentForm()
 
-	context = { 'posts': posts}
+	context = { 'posts': posts, 'comment_form': comment_form }
 	return render(request, 'social/feed.html', context)
 
 def register(request):
@@ -76,12 +78,65 @@ def about(request):
 	return render(request, 'social/about.html')
 
 
+@login_required
+def add_comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.user = request.user
+            comment.save()
+            messages.success(request, 'Comentario añadido correctamente')
+            
+            # Redirigir a la página de origen
+            return redirect(request.META.get('HTTP_REFERER', 'feed'))
+    
+    # Si algo falla, redirigir al feed
+    return redirect('feed')
 
 
 
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, 'Tu perfil ha sido actualizado')
+            return redirect('profile', username=request.user.username)
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+    
+    context = {
+        'u_form': u_form,
+        'p_form': p_form
+    }
+    
+    return render(request, 'social/edit_profile.html', context)
 
 
-
-
-
-
+@login_required
+def like_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    
+    # Verificar si ya le dio like
+    like = Like.objects.filter(post=post, user=request.user).first()
+    
+    if like:
+        # Si ya existe un like, lo eliminamos (unlike)
+        like.delete()
+        messages.success(request, 'Has quitado tu me gusta')
+    else:
+        # Si no existe, creamos uno nuevo
+        Like.objects.create(post=post, user=request.user)
+        messages.success(request, 'Te gusta esta publicación')
+    
+    # Redirigir a la página desde donde se hizo la solicitud
+    return redirect(request.META.get('HTTP_REFERER', 'feed'))
